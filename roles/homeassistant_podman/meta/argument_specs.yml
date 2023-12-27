@@ -1,0 +1,37 @@
+---
+argument_specs:
+  main:
+    short_description: Main entrypoint for the homeassistant_podman role
+    description:
+      - This is the main entrypoint for the C(homeassistant_podman) role.
+    author: Adam Haydon
+    options:
+      homeassistant_podman_home:
+        type: path
+        required: true
+        description:
+          - The path for the config and data.
+
+      homeassistant_podman_name:
+        type: str
+        default: homeassistant
+        description:
+          - Name of the container and service.
+
+      homeassistant_podman_version:
+        type: str
+        default: stable
+        description:
+          - The tag to use for the Home Assistant container image.
+
+      homeassistant_podman_user:
+        type: str
+        default: hass
+        description:
+          - The name of the user to run the Podman container.
+
+      homeassistant_podman_group:
+        type: str
+        default: "{{ homeassistant_podman_user }}"
+        description:
+          - The name of the primary group for the homeassistant user.

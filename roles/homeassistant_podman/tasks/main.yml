@@ -1,0 +1,43 @@
+---
+- name: Create Home Assistant data directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ homeassistant_podman_user }}"
+    group: "{{ homeassistant_podman_group }}"
+    mode: "0770"
+  become: yes
+  loop:
+    - "{{ homeassistant_podman_home }}/config"
+    - "{{ homeassistant_podman_home }}/media"
+
+- name: Create homeassistant container
+  ansible.builtin.include_role:
+    name: ahaydon.podman.podman_systemd
+  vars:
+    podman_systemd_name: "{{ homeassistant_podman_name }}"
+    podman_systemd_user: "{{ homeassistant_podman_user }}"
+    podman_systemd_image: ghcr.io/home-assistant/home-assistant:{{ homeassistant_podman_version }}
+    podman_systemd_network: host
+    podman_systemd_environment:
+      TZ: Europe/London
+    podman_systemd_volumes:
+      - "{{ homeassistant_podman_home }}/config:/config"
+      - "{{ homeassistant_podman_home }}/media:/media"
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Enable homeassistant service
+  ansible.builtin.systemd:
+    name: container-{{ homeassistant_podman_name }}.service
+    enabled: yes
+  become: yes
+
+- name: Start homeassistant service
+  ansible.builtin.systemd:
+    name: container-{{ homeassistant_podman_name }}.service
+    state: started
+  become: yes

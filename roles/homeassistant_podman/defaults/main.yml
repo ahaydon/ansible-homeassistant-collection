@@ -1,0 +1,5 @@
+---
+homeassistant_podman_version: stable
+homeassistant_podman_name: homeassistant
+homeassistant_podman_user: hass
+homeassistant_podman_group: "{{ homeassistant_podman_user }}"

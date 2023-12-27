@@ -1,0 +1,20 @@
+namespace: ahaydon
+name: homeassistant
+version: 0.1.0
+readme: README.md
+authors:
+  - Adam Haydon (https://github.com/ahaydon)
+description: Collection of roles and playbooks for deploying Home Assistant
+license_file: LICENSE
+tags:
+  - homeassistant
+  - podman
+  - application
+  - linux
+dependencies:
+  "git+https://github.com/ahaydon/ansible-podman-collection.git": "master"
+repository: https://github.com/ahaydon/ansible-homeassistant-collection
+documentation: https://github.com/ahaydon/ansible-homeassistant-collection
+homepage: https://github.com/ahaydon/ansible-homeassistant-collection
+issues: https://github.com/ahaydon/ansible-homeassistant-collection/issues
+build_ignore: []

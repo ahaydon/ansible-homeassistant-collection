@@ -1,0 +1,15 @@
+---
+- name: Deploy Home Assistant
+  hosts: all
+
+  vars:
+    homeassistant_user: hass
+
+  roles:
+    - role: ahaydon.podman.podman_user
+      podman_user_name: "{{ homeassistant_user }}"
+      become: yes
+
+    - role: homeassistant_podman
+      homeassistant_podman_user: "{{ homeassistant_user }}"
+      homeassistant_podman_home: "{{ podman_user_home }}"
